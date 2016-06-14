@@ -1,2 +1,4 @@
-I have retired from Minecraft for a while now. Gabizou is now maintinaing the Sponge port of Lift: https://github.com/gabizou/Lift
-Simple Elevator lifts for Bukkit Minecraft servers and Spout Vanilla Servers
+# The Lift plugin
+
+- Sponge code removed.
+- Now use spigot 1.9.4 API

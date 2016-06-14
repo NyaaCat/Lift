@@ -5,11 +5,11 @@
 maxLiftArea: 16
 maxHeight: 256
 debug: false
-autoPlace: false
-preventEntry: false
+autoPlace: true
+preventEntry: true
 preventLeave: true
-checkFloor: false
-liftMobs: true
+checkFloor: true
+liftMobs: false
 floorBlocks:
 - GLASS
 - STAINED_GLASS
