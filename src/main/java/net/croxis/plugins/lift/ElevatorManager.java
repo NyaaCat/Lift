@@ -19,12 +19,12 @@
 package net.croxis.plugins.lift;
 
 public abstract class ElevatorManager implements Runnable {
-	public static int taskid;
+    public static int taskid;
 
-	public void run() {
-		// TODO Auto-generated method stub
-		
-	}
-	
+    public void run() {
+        // TODO Auto-generated method stub
+
+    }
+
 
 }

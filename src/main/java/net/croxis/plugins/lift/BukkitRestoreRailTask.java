@@ -22,16 +22,16 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class BukkitRestoreRailTask extends BukkitRunnable{
-	private final Block button;
-	private final Material type;
-	
-	public BukkitRestoreRailTask(Block b){
-		button = b;
-		type = b.getType();
-	}
+public class BukkitRestoreRailTask extends BukkitRunnable {
+    private final Block button;
+    private final Material type;
 
-	public void run() {
-		button.setType(type);
-	}
+    public BukkitRestoreRailTask(Block b) {
+        button = b;
+        type = b.getType();
+    }
+
+    public void run() {
+        button.setType(type);
+    }
 }

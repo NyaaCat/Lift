@@ -22,16 +22,16 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class BukkitCancelRedstoneTask extends BukkitRunnable{
-	private final Block button;
-	
-	public BukkitCancelRedstoneTask(Block b){
-		button = b;
-	}
+public class BukkitCancelRedstoneTask extends BukkitRunnable {
+    private final Block button;
 
-	public void run() {
-		BlockState state = button.getState();
-		((org.bukkit.material.Button) state.getData()).setPowered(false);
-		state.update();
-	}
+    public BukkitCancelRedstoneTask(Block b) {
+        button = b;
+    }
+
+    public void run() {
+        BlockState state = button.getState();
+        ((org.bukkit.material.Button) state.getData()).setPowered(false);
+        state.update();
+    }
 }

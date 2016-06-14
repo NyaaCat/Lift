@@ -18,34 +18,36 @@
  */
 package net.croxis.plugins.lift;
 
-import java.util.TreeMap;
-
 public class Floor {
-	private String name = "";
-	private int y;
-	private int floor;
-	
-	public Floor(final int y){
-		this.y = y;
-	}
-	
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-		if (name == null)
-			this.name = "";
-	}
-	public int getY() {
-		return y;
-	}
-	public int getFloor() {
-		return floor;
-	}
-	public void setFloor(int floor) {
-		this.floor = floor;
-	}
-	
+    private String name = "";
+    private int y;
+    private int floor;
+
+    public Floor(final int y) {
+        this.y = y;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+        if (name == null)
+            this.name = "";
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getFloor() {
+        return floor;
+    }
+
+    public void setFloor(int floor) {
+        this.floor = floor;
+    }
+
 
 }
