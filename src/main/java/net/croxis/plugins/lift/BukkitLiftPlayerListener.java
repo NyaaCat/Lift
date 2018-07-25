@@ -82,7 +82,11 @@ public class BukkitLiftPlayerListener implements Listener {
                     event.getPlayer().sendMessage("Elevator generator says this floor does not exist. Check shaft for blockage");
                     return;
                 }
-
+                String line0 = sign.getLine(0);
+                if (line0 != null && line0.length() > 0 && !ChatColor.stripColor(BukkitLift.stringCurrentFloor).equals(ChatColor.stripColor(line0))) {
+                    event.getPlayer().sendMessage(BukkitLift.stringInvalidSign);
+                    return;
+                }
                 String sign0 = BukkitLift.stringCurrentFloor;
                 String sign1 = Integer.toString(currentFloor.getFloor());
                 String sign2 = "";

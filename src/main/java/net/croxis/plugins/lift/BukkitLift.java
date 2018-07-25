@@ -57,6 +57,7 @@ public class BukkitLift extends JavaPlugin implements Listener {
     public static String stringOneFloor;
     public static String stringCantEnter;
     public static String stringCantLeave;
+    public static String stringInvalidSign;
 
     public void logDebug(String message) {
         if (debug)
@@ -107,6 +108,7 @@ public class BukkitLift extends JavaPlugin implements Listener {
         stringDestination = getConfig().getString("STRING_dest", "Dest:");
         stringCantEnter = getConfig().getString("STRING_cantEnter", "Can't enter elevator in use");
         stringCantLeave = getConfig().getString("STRING_cantLeave", "Can't leave elevator in use");
+        stringInvalidSign = getConfig().getString("STRING_invalidSign", "[Lift] Invalid sign contents, first line must be empty.");
 
         saveConfig();
 
