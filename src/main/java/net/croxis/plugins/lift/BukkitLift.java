@@ -20,6 +20,7 @@ package net.croxis.plugins.lift;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.block.BlockFace;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -93,7 +94,13 @@ public class BukkitLift extends JavaPlugin implements Listener {
         }
         List<String> configFloorMaterials = this.getConfig().getStringList("floorBlocks");
         for (String key : configFloorMaterials) {
-            floorMaterials.add(Material.valueOf(key));
+            Material block = Material.getMaterial(key);
+            if (block == null) {
+               block = Material.getMaterial(key, true);
+            }
+            if (block != null) {
+                floorMaterials.add(block);
+            }
         }
         stringOneFloor = getConfig().getString("STRING_oneFloor", "There is only one floor silly.");
         stringCurrentFloor = getConfig().getString("STRING_currentFloor", "Current Floor:");

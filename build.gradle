@@ -1,7 +1,7 @@
 apply plugin: 'java'
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
     jcenter()
@@ -23,10 +23,13 @@ version = 'nyaacat-1'
 
 jar {
     baseName 'Lift'
-    appendix 'spigot1.9.4'
+    appendix 'spigot1.13'
 }
 
 //dependencies declaration
 dependencies {
-    compile 'org.spigotmc:spigot-api:1.9.4-R0.1-SNAPSHOT'
+    compile 'org.spigotmc:spigot-api:1.13-R0.1-SNAPSHOT'
+}
+compileJava {
+    options.compilerArgs += ["-Xlint:deprecation"]
 }

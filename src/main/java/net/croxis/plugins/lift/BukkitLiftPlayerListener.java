@@ -21,6 +21,7 @@ package net.croxis.plugins.lift;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
@@ -31,10 +32,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.inventory.InventoryPickupItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerKickEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class BukkitLiftPlayerListener implements Listener {
@@ -54,7 +55,7 @@ public class BukkitLiftPlayerListener implements Listener {
 
             if (event.getClickedBlock().getType() == Material.WALL_SIGN
                     && buttonBlock != null
-                    && (buttonBlock.getType() == Material.STONE_BUTTON || buttonBlock.getType() == Material.WOOD_BUTTON)) {
+                    && Tag.BUTTONS.isTagged(buttonBlock.getType())) {
 
                 Sign sign = (Sign) event.getClickedBlock().getState();
                 BukkitElevator bukkitElevator = BukkitElevatorManager.createLift(buttonBlock, event.getPlayer().getName());
@@ -118,7 +119,7 @@ public class BukkitLiftPlayerListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerItemPickup(PlayerPickupItemEvent event) {
+    public void onPlayerItemPickup(EntityPickupItemEvent event) {
         if (BukkitElevatorManager.isPassenger(event.getItem()))
             BukkitElevatorManager.removePassenger(event.getItem());
     }
