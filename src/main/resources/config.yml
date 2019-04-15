@@ -12,7 +12,22 @@ checkFloor: true
 liftMobs: false
 floorBlocks:
 - GLASS
-- STAINED_GLASS
+- BLACK_STAINED_GLASS
+- BLUE_STAINED_GLASS
+- BROWN_STAINED_GLASS
+- CYAN_STAINED_GLASS
+- GRAY_STAINED_GLASS
+- GREEN_STAINED_GLASS
+- LIGHT_BLUE_STAINED_GLASS
+- LIGHT_GRAY_STAINED_GLASS
+- LIME_STAINED_GLASS
+- MAGENTA_STAINED_GLASS
+- ORANGE_STAINED_GLASS
+- PINK_STAINED_GLASS
+- PURPLE_STAINED_GLASS
+- RED_STAINED_GLASS
+- WHITE_STAINED_GLASS
+- YELLOW_STAINED_GLASS
 redstone: false
 baseBlockSpeeds:
   IRON_BLOCK: 0.5
@@ -21,3 +36,4 @@ STRING_currentFloor: "Current Floor:"
 STRING_dest: "Dest:"
 STRING_cantEnter: "Can't enter elevator in use"
 STRING_cantLeave: "Can't leave elevator in use"
+STRING_invalidSign: "[Lift] Invalid sign contents, first line must be empty."

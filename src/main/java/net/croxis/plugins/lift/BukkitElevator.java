@@ -23,6 +23,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Minecart;
@@ -39,7 +40,7 @@ public class BukkitElevator extends Elevator {
     private HashMap<Location, FloorBlock> floorBlocks = new HashMap<Location, FloorBlock>();
     //Integer is the meta "damage" value
     private HashSet<Location> redstoneBlocks = new HashSet<Location>();
-    private HashMap<Location, Byte> carpetBlocks = new HashMap<Location, Byte>();
+    private HashMap<Location, Material> carpetBlocks = new HashMap<Location, Material>();
     private HashMap<Location, FloorBlock> railBlocks = new HashMap<Location, FloorBlock>();
     private HashMap<Entity, Vector> minecartSpeeds = new HashMap<Entity, Vector>();
     public HashSet<Chunk> chunks = new HashSet<Chunk>();
@@ -50,9 +51,9 @@ public class BukkitElevator extends Elevator {
 
     class FloorBlock {
         public Material material;
-        public Byte data;
+        public BlockData data;
 
-        public FloorBlock(final Material m, final Byte d) {
+        public FloorBlock(final Material m, final BlockData d) {
             material = m;
             data = d;
         }
@@ -144,15 +145,15 @@ public class BukkitElevator extends Elevator {
     }
 
     public void addFloorBlock(Block block) {
-        floorBlocks.put(block.getLocation(), new FloorBlock(block.getType(), block.getData()));
+        floorBlocks.put(block.getLocation(), new FloorBlock(block.getType(), block.getBlockData()));
     }
 
-    public HashMap<Location, Byte> getCarpetBlocks() {
+    public HashMap<Location, Material> getCarpetBlocks() {
         return carpetBlocks;
     }
 
     public void addCarpetBlock(Block block) {
-        carpetBlocks.put(block.getLocation(), block.getData());
+        carpetBlocks.put(block.getLocation(), block.getType());
     }
 
     public HashMap<Location, FloorBlock> getRailBlocks() {
@@ -160,7 +161,7 @@ public class BukkitElevator extends Elevator {
     }
 
     public void addRailBlock(Block block) {
-        railBlocks.put(block.getLocation(), new FloorBlock(block.getType(), block.getData()));
+        railBlocks.put(block.getLocation(), new FloorBlock(block.getType(), block.getBlockData()));
     }
 
     public HashSet<Location> getRedstoneBlocks() {

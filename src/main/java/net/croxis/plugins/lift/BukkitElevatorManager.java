@@ -20,6 +20,7 @@ package net.croxis.plugins.lift;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -99,19 +100,18 @@ public class BukkitElevatorManager extends ElevatorManager {
                 || checkBlock.getType() == Material.AIR
                 || checkBlock.getType() == Material.LADDER
                 || checkBlock.getType() == Material.SNOW
-                || checkBlock.getType() == Material.STATIONARY_WATER
-                || checkBlock.getType() == Material.STONE_BUTTON
+                || checkBlock.getType() == Material.WATER
                 || checkBlock.getType() == Material.TORCH
                 || checkBlock.getType() == Material.VINE
                 || checkBlock.getType() == Material.WALL_SIGN
                 || checkBlock.getType() == Material.WATER
-                || checkBlock.getType() == Material.WOOD_BUTTON
-                || checkBlock.getType() == Material.CARPET
-                || checkBlock.getType() == Material.RAILS
+                || checkBlock.getType() == Material.RAIL
                 || checkBlock.getType() == Material.DETECTOR_RAIL
                 || checkBlock.getType() == Material.ACTIVATOR_RAIL
                 || checkBlock.getType() == Material.POWERED_RAIL
-                || checkBlock.getType() == Material.REDSTONE_WIRE);
+                || checkBlock.getType() == Material.REDSTONE_WIRE
+                || Tag.BUTTONS.isTagged(checkBlock.getType())
+                || Tag.CARPETS.isTagged(checkBlock.getType()));
     }
 
     //Recursive function that constructs our list of blocks
@@ -158,7 +158,7 @@ public class BukkitElevatorManager extends ElevatorManager {
                     plugin.logDebug("Not valid shaft block" + x + " " + y1 + " " + z + " of type " + testBlock.getType().toString());
                     break;
                 }
-                if (testBlock.getType() == Material.STONE_BUTTON || testBlock.getType() == Material.WOOD_BUTTON) {
+                if (Tag.BUTTONS.isTagged(testBlock.getType())) {
                     if (plugin.checkFloor)
                         if (!scanFloorAtY(currentWorld, testBlock.getY() - 2, bukkitElevator)) {
                             break;
@@ -209,7 +209,7 @@ public class BukkitElevatorManager extends ElevatorManager {
         plugin.logDebug("Halting lift");
         for (Location location : bukkitElevator.getFloorBlocks().keySet()) {
             location.getBlock().setType(bukkitElevator.getFloorBlocks().get(location).material);
-            location.getBlock().setData(bukkitElevator.getFloorBlocks().get(location).data);
+            location.getBlock().setBlockData(bukkitElevator.getFloorBlocks().get(location).data);
             if (location.getBlock().getType() == Material.AIR && !plugin.checkFloor)
                 location.getBlock().setType(plugin.floorMaterials.iterator().next());
         }
@@ -217,12 +217,11 @@ public class BukkitElevatorManager extends ElevatorManager {
             location.getBlock().setType(Material.REDSTONE_WIRE);
         }
         for (Location location : bukkitElevator.getCarpetBlocks().keySet()) {
-            location.getBlock().setType(Material.CARPET);
-            location.getBlock().setData(bukkitElevator.getCarpetBlocks().get(location));
+            location.getBlock().setType(bukkitElevator.getCarpetBlocks().get(location));
         }
         for (Location location : bukkitElevator.getRailBlocks().keySet()) {
             location.getBlock().setType(bukkitElevator.getRailBlocks().get(location).material);
-            location.getBlock().setData(bukkitElevator.getRailBlocks().get(location).data);
+            location.getBlock().setBlockData(bukkitElevator.getRailBlocks().get(location).data);
         }
 
         Iterator<Entity> passengerIterator = bukkitElevator.getPassengers();
@@ -253,39 +252,35 @@ public class BukkitElevatorManager extends ElevatorManager {
             plugin.logInfo("WARNING: Unable to get sign for redstone pulse.");
             plugin.logInfo("Sign coords: " + s.getLocation().toString());
             plugin.logInfo("Sign material: " + s.getType().toString());
-            plugin.logInfo("Sign ID: " + Integer.toString(s.getTypeId()));
+            //plugin.logInfo("Sign ID: " + Integer.toString(s.getTypeId()));
             bukkitElevator.clear();
             return;
         }
 
         BlockFace directionFacing = sign.getFacing();
         if (directionFacing == BlockFace.NORTH) {
-            if (s.getRelative(BlockFace.SOUTH).getRelative(BlockFace.SOUTH).getType() == Material.STONE_BUTTON
-                    || s.getRelative(BlockFace.SOUTH).getRelative(BlockFace.SOUTH).getType() == Material.WOOD_BUTTON) {
+            if (Tag.BUTTONS.isTagged(s.getRelative(BlockFace.SOUTH).getRelative(BlockFace.SOUTH).getType())) {
                 BlockState state = s.getRelative(BlockFace.SOUTH).getRelative(BlockFace.SOUTH).getState();
                 ((org.bukkit.material.Button) state.getData()).setPowered(true);
                 state.update();
                 new BukkitCancelRedstoneTask(s.getRelative(BlockFace.SOUTH).getRelative(BlockFace.SOUTH)).runTaskLater(plugin, 10);
             }
         } else if (directionFacing == BlockFace.EAST) {
-            if (s.getRelative(BlockFace.WEST).getRelative(BlockFace.WEST).getType() == Material.STONE_BUTTON
-                    || s.getRelative(BlockFace.WEST).getRelative(BlockFace.WEST).getType() == Material.WOOD_BUTTON) {
+            if (Tag.BUTTONS.isTagged(s.getRelative(BlockFace.WEST).getRelative(BlockFace.WEST).getType())) {
                 BlockState state = s.getRelative(BlockFace.WEST).getRelative(BlockFace.WEST).getState();
                 ((org.bukkit.material.Button) state.getData()).setPowered(true);
                 state.update();
                 new BukkitCancelRedstoneTask(s.getRelative(BlockFace.WEST).getRelative(BlockFace.WEST)).runTaskLater(plugin, 10);
             }
         } else if (directionFacing == BlockFace.SOUTH) {
-            if (s.getRelative(BlockFace.NORTH).getRelative(BlockFace.NORTH).getType() == Material.STONE_BUTTON
-                    || s.getRelative(BlockFace.NORTH).getRelative(BlockFace.NORTH).getType() == Material.WOOD_BUTTON) {
+            if (Tag.BUTTONS.isTagged(s.getRelative(BlockFace.NORTH).getRelative(BlockFace.NORTH).getType())) {
                 BlockState state = s.getRelative(BlockFace.NORTH).getRelative(BlockFace.NORTH).getState();
                 ((org.bukkit.material.Button) state.getData()).setPowered(true);
                 state.update();
                 new BukkitCancelRedstoneTask(s.getRelative(BlockFace.NORTH).getRelative(BlockFace.NORTH)).runTaskLater(plugin, 10);
             }
         } else if (directionFacing == BlockFace.WEST) {
-            if (s.getRelative(BlockFace.EAST).getRelative(BlockFace.EAST).getType() == Material.STONE_BUTTON
-                    || s.getRelative(BlockFace.EAST).getRelative(BlockFace.EAST).getType() == Material.WOOD_BUTTON) {
+            if (Tag.BUTTONS.isTagged(s.getRelative(BlockFace.EAST).getRelative(BlockFace.EAST).getType())) {
                 BlockState state = s.getRelative(BlockFace.EAST).getRelative(BlockFace.EAST).getState();
                 ((org.bukkit.material.Button) state.getData()).setPowered(true);
                 state.update();
